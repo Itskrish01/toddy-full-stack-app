@@ -25,8 +25,6 @@ interface TodoData {
 }
 
 
-
-
 const AddTodoInputBox = () => {
     const { token } = useToken()
     const { register, handleSubmit, formState: { errors }, control, setValue } = useForm<TodoData>({
@@ -71,8 +69,20 @@ const AddTodoInputBox = () => {
 
     return (
         <form className={`p-5 bg-[#fff] rounded-lg shadow ${errors.todoTitle ? 'border border-danger-500' : ''}`} onSubmit={handleSubmit(onSubmit)}>
-            <input {...register('todoTitle')} type="text" className={`text-base w-full focus:outline-none text-primaryDark placeholder:text-[#c5c7d7] ${errors.todoTitle ? 'placeholder:text-danger-500' : ''}`} placeholder={errors.todoTitle ? 'Task title is required' : 'Add a new Task here...'} />
-            <textarea {...register('description')} cols={30} rows={3} placeholder="Description" className="w-full px-0.5 mt-2 text-sm focus:outline-none text-primaryDark resize-none placeholder:text-[#c5c7d7]"></textarea>
+            <input
+                {...register('todoTitle')}
+                type="text"
+                className={`text-base w-full focus:outline-none text-primaryDark placeholder:text-[#c5c7d7] ${errors.todoTitle ? 'placeholder:text-danger-500' : ''}`} placeholder={errors.todoTitle ? 'Task title is required' : 'Add a new Task here...'}
+                autoComplete="off"
+            />
+            <textarea
+                {...register('description')}
+                cols={30}
+                rows={3}
+                placeholder="Description"
+                className="w-full mt-2 text-sm focus:outline-none text-primaryDark resize-none placeholder:text-[#c5c7d7] "
+                autoComplete="off"
+            />
             <div className="flex justify-between">
                 <Controller control={control} name='dueDate' render={({ field }) => (
                     <Popover>

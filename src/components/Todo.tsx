@@ -62,7 +62,7 @@ const Todo = (props: Props) => {
                     modalOpen: true
                 }
             })}
-            className={`flex items-start gap-3 px-5 py-5 bg-white rounded-md shadow hover:shadow-md cursor-pointer border border-gray-100 transition-all duration-300 ${props.className}`}
+            className={`flex items-start gap-3 px-5 py-5 hover:bg-secondary-50 hover:border-secondary-50 bg-white rounded-md shadow hover:shadow-md cursor-pointer border border-gray-100 transition-all duration-300 ${props.className}`}
         >
             <Checkbox
                 defaultSelected={props.completed}

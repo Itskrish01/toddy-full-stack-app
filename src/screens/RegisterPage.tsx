@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
-import { Divider, Input, Button, Link } from '@nextui-org/react'
+import { Divider, Input, Button, Link, Image } from '@nextui-org/react'
 import { EyeSlashFilledIcon } from '../icons/EyeLashIcon'
 import { EyeFilledIcon } from '../icons/EyeFilledIcon'
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -37,7 +37,7 @@ const RegisterPage = () => {
     const { mutate, isLoading } = useMutation(createUser, {
         onSuccess: data => {
             console.log(data);
-            toast.success("Successfully registered",)
+            toast.success("Successfully registered user 🎉",)
             navigate('/login')
         },
         onError: (error) => {
@@ -62,10 +62,13 @@ const RegisterPage = () => {
 
     const toggleVisibility = () => setIsVisible(!isVisible);
     return (
-        <div className='container mx-auto max-w-2xl w-full pt-32 px-4'>
-            <h2 className='sm:text-[36px] text-[24px] text-center font-[700] text-primaryDark'>
-                Register To Toddy
-            </h2>
+        <div className='container mx-auto max-w-2xl w-full pt-20 px-4'>
+            <div className='flex items-center flex-col'>
+                <Image src='/logo.png' height={100} width={100} />
+                <h2 className='sm:text-[36px] text-[24px] text-center font-[700] text-primaryDark mt-2'>
+                    Register To Toddy
+                </h2>
+            </div>
             <Divider className="my-4" />
             <form className='mt-10 space-y-5' onSubmit={handleSubmit(onSubmit)}>
                 <Input

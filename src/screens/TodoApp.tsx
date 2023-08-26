@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import AddTodoInputBox from "../components/AddTodoInputBox";
 import Todo from "../components/Todo";
 import { useToken } from "../hooks/useToken";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button, Image, Spinner } from "@nextui-org/react";
 import LogOutIcon from "../icons/LogOutIcon";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -19,6 +19,7 @@ interface todoData {
 
 const TodoApp = () => {
     const { logout, userAuthenticated, token, user } = useToken();
+    const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
     const navigate = useNavigate()
 
     const { isLoading, data } = useQuery({
@@ -35,7 +36,11 @@ const TodoApp = () => {
     const todos = data?.data
 
     const handleLogout = () => {
-        logout();
+        setIsLoggingOut(true)
+        setTimeout(() => {
+            logout();
+            setIsLoggingOut(false)
+        }, 2000)
     };
 
     useEffect(() => {
@@ -48,8 +53,8 @@ const TodoApp = () => {
         <>
             <div className="bg-[#eeeef4] pb-20">
                 <div className="absolute top-4 right-4">
-                    <Button color="default" aria-label="logout" className="font-bold" onClick={() => handleLogout()}>
-                        <LogOutIcon />
+                    <Button isLoading={isLoggingOut} color="default" aria-label="logout" className="font-bold" onClick={() => handleLogout()}>
+                        {!isLoggingOut && <LogOutIcon />}
                         Logout
                     </Button>
                 </div>
@@ -70,7 +75,10 @@ const TodoApp = () => {
                                     <Spinner color="secondary" size="lg" />
                                 </div>
                                 : todos?.length === 0 ? (
-                                    <span className="text-center flex items-center justify-center mt-10 text-lg font-semibold text-gray-400">No todos are here, Add some todos.</span>
+                                    <div className="flex items-center flex-col justify-center text-center bg-white rounded-lg mt-3 shadow-md py-8">
+                                        <Image src="thinking.png" height={100} width={100} />
+                                        <span className="text-center flex items-center justify-center mt-10 text-lg font-semibold text-gray-400">No todos are here, Add some todos.</span>
+                                    </div>
                                 ) : (
                                     todos?.map((todo: todoData, index: number) => (
                                         <Todo
