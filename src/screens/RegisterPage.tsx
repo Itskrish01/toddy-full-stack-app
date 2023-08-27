@@ -23,7 +23,7 @@ interface userData {
 }
 
 const createUser = async (data: userData) => {
-    const { data: response } = await axios.post('https://todd-backend.onrender.com/register', data);
+    const { data: response } = await axios.post('https://plum-jittery-bull.cyclic.cloud/register', data);
     return response.data;
 };
 

@@ -34,7 +34,7 @@ const AddTodoInputBox = () => {
 
     const createTodo = async (data: TodoData) => {
         try {
-            const { data: response } = await axios.post('https://todd-backend.onrender.com/todos', data, {
+            const { data: response } = await axios.post('https://plum-jittery-bull.cyclic.cloud/todos', data, {
                 headers: {
                     'Authorization': `${token}`,
                 },

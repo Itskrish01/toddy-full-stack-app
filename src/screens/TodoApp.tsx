@@ -25,7 +25,7 @@ const TodoApp = () => {
     const { isLoading, data } = useQuery({
         queryKey: ["todos"],
         queryFn: () =>
-            axios.get("https://todd-backend.onrender.com/todos", {
+            axios.get("https://plum-jittery-bull.cyclic.cloud/todos", {
                 headers: {
                     Authorization: `${token}`,
                 },

@@ -28,7 +28,7 @@ export default function EditModal() {
 
     const deleteTodo = async (id: string) => {
         try {
-            const { data: response } = await axios.delete(`https://todd-backend.onrender.com/todos/${id}`, {
+            const { data: response } = await axios.delete(`https://plum-jittery-bull.cyclic.cloud/todos/${id}`, {
                 headers: {
                     'Authorization': `${token}`,
                 },
@@ -42,7 +42,7 @@ export default function EditModal() {
 
     const newEditedTodo = async (data: TodoData) => {
         try {
-            const { data: response } = await axios.put(`https://todd-backend.onrender.com/todos/${params.id}`, data, {
+            const { data: response } = await axios.put(`https://plum-jittery-bull.cyclic.cloud/todos/${params.id}`, data, {
                 headers: {
                     'Authorization': `${token}`,
                 },
@@ -57,7 +57,7 @@ export default function EditModal() {
     const { data: singleTodo, isSuccess } = useQuery({
         queryKey: ["todos", params.id],
         queryFn: () =>
-            axios.get(`https://todd-backend.onrender.com/todos/${params.id}`, {
+            axios.get(`https://plum-jittery-bull.cyclic.cloud/todos/${params.id}`, {
                 headers: {
                     Authorization: `${token}`,
                 },

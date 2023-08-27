@@ -50,7 +50,7 @@ const TokenProvider: React.FC<TokenProviderProps> = ({ children }) => {
         const fetchCurrentUser = async () => {
             if (token) {
                 try {
-                    const response = await fetch('https://todd-backend.onrender.com/current-user', {
+                    const response = await fetch('https://plum-jittery-bull.cyclic.cloud/current-user', {
                         headers: {
                             Authorization: token,
                         },

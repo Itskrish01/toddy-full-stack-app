@@ -24,7 +24,7 @@ const Todo = (props: Props) => {
     const updateCompletionMutation = useMutation(
         async (updatedIsComplete: boolean) => {
             const response = await axios.put(
-                `https://todd-backend.onrender.com/todos/${props._id}`,
+                `https://plum-jittery-bull.cyclic.cloud/todos/${props._id}`,
                 {
                     completed: updatedIsComplete,
                 },
