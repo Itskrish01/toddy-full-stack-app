@@ -9,7 +9,8 @@ import { Button, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/rea
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useToken } from "../hooks/useToken";
-import toast from "react-hot-toast";
+import { toast } from "./ui/use-toast";
+
 
 const todoSchema = yup.object().shape({
     todoTitle: yup.string().required(),
@@ -51,7 +52,10 @@ const AddTodoInputBox = () => {
     const mutation = useMutation(createTodo, {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['todos'] })
-            toast.success('Successfully added task')
+            toast({
+                title: "Successfully added new Todo 🎉",
+                description: "It is simple as that to add todos",
+            })
 
             setValue('todoTitle', "")
             setValue('dueDate', "")
@@ -107,7 +111,7 @@ const AddTodoInputBox = () => {
                                 selected={new Date(field.value)}
                                 onSelect={(date) => field.onChange(date)}
                                 disabled={(date) =>
-                                    date > new Date() || date < new Date("1900-01-01")
+                                    date < new Date("1900-01-01")
                                 }
                                 initialFocus
                             />

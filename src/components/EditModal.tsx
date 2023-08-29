@@ -4,11 +4,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToken } from "../hooks/useToken";
-import toast from "react-hot-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { cn } from "./lib/utils";
 import { Calendar } from "./ui/calendar";
+import { toast } from './ui/use-toast';
 
 interface TodoData {
     todoTitle: string | undefined;
@@ -67,7 +67,9 @@ export default function EditModal() {
     const { mutate, isLoading } = useMutation(deleteTodo, {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['todos'] })
-            toast.success('Successfully Deleted the todo')
+            toast({
+                title: "Successfully deleted the todo",
+            })
             navigate('/')
         },
         onError: (error) => {
@@ -80,7 +82,9 @@ export default function EditModal() {
     const editTodoMutation = useMutation(newEditedTodo, {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['todos'] })
-            toast.success('Successfully Edited task')
+            toast({
+                title: "Successfully updated the todo",
+            })
             navigate('/')
         },
         onError: (error) => {
@@ -155,9 +159,12 @@ export default function EditModal() {
                                 selected={new Date(dueDate)}
                                 // @ts-expect-error it is working fine even with error
                                 onSelect={(date) => setDueDate(date)}
-                                disabled={(date) =>
-                                    date > new Date() || date < new Date("1900-01-01")
-                                }
+                                disabled={(date) => {
+                                    console.log(date)
+                                    return (
+                                        date < new Date("1900-01-01")
+                                    )
+                                }}
                             />
                         </PopoverContent>
                     </Popover>

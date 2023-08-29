@@ -8,7 +8,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useToken } from '../hooks/useToken';
-import toast from 'react-hot-toast';
+import { toast } from '../components/ui/use-toast';
+
 
 const schema = yup.object({
     email: yup.string().email().required(),
@@ -38,7 +39,9 @@ const LoginPage = () => {
         onSuccess: data => {
             console.log(data);
             setNewToken(data, expirationTimestamp)
-            toast.success('Successfully Logged in 🎉')
+            toast({
+                title: "Successfully logged in 🎉",
+            })
         },
         onError: (error) => {
             if (error instanceof Error) {

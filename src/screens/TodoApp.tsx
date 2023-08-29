@@ -49,6 +49,7 @@ const TodoApp = () => {
         }
     }, [userAuthenticated]);
 
+
     return (
         <>
             <div className="bg-[#eeeef4] pb-20">

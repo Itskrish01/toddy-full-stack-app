@@ -1,9 +1,12 @@
-import { Checkbox } from '@nextui-org/react';
+import { useEffect } from 'react'
+import { Checkbox, Tooltip } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query'; // Import React Query hooks
 import axios from 'axios';
 import { useToken } from '../hooks/useToken';
-import toast from 'react-hot-toast';
+import { format } from 'date-fns';
+import { hasDatePassed } from './lib/utils';
+import { toast } from './ui/use-toast';
 
 type Props = {
     _id: string
@@ -14,11 +17,9 @@ type Props = {
     className: string
 }
 
+
 const Todo = (props: Props) => {
-    const dueDateObject = new Date(props.dueDate);
     const { token } = useToken()
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-    const formattedDate = dueDateObject.toLocaleDateString(undefined, options);
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const updateCompletionMutation = useMutation(
@@ -40,7 +41,10 @@ const Todo = (props: Props) => {
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['todos'] });
                 if (!props.completed) {
-                    toast.success('Successfully selected the task as completed!')
+                    toast({
+                        title: "Successfully selected the task as completed",
+                        description: "It is simple as that to add todos",
+                    })
                 }
             },
             onError: (error) => {
@@ -55,6 +59,23 @@ const Todo = (props: Props) => {
         updateCompletionMutation.mutateAsync(updatedIsComplete);
     };
 
+    useEffect(() => {
+        if (hasDatePassed(props.dueDate)) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Your todo's due date has passed",
+                description: (
+
+                    <code className="text-white">
+                        todo: {props.todoTitle}
+                    </code>
+
+                ),
+            })
+        }
+    }, [props.dueDate])
+
+
     return (
         <li
             onClick={() => navigate(`/todo/${props._id}`, {
@@ -62,7 +83,7 @@ const Todo = (props: Props) => {
                     modalOpen: true
                 }
             })}
-            className={`flex items-start gap-3 px-5 py-5 hover:bg-secondary-50 hover:border-secondary-50 bg-white rounded-md shadow hover:shadow-md cursor-pointer border border-gray-100 transition-all duration-300 ${props.className}`}
+            className={`flex items-start gap-3 px-5 py-4 hover:bg-secondary-50 hover:border-secondary-50 bg-white rounded-md shadow hover:shadow-md cursor-pointer border border-gray-100 transition-all duration-300 ${props.className}`}
         >
             <Checkbox
                 defaultSelected={props.completed}
@@ -72,19 +93,35 @@ const Todo = (props: Props) => {
                 onChange={handleCheckboxChange}
             />
             <div className="flex flex-col flex-grow">
-                <h5 className="text-base font-semibold text-gray-900">
+                <h5 className="text-lg font-medium text-gray-900">
                     {props.todoTitle}
                 </h5>
                 {props.description && (
                     <p className="text-sm text-gray-600 mt-1">{props.description}</p>
                 )}
-                {props.dueDate && (
-                    <div className="mt-2">
-                        <p className="text-sm text-gray-600 font-semibold">
-                            {formattedDate} {/* Replace with your formatted date */}
-                        </p>
-                    </div>
-                )}
+                <div className='flex mt-1'>
+                    {props.dueDate && (
+                        hasDatePassed(props.dueDate) ? (
+                            <Tooltip key="foreground" color="danger" content="The due date has passed" placement='bottom' className="capitalize">
+                                <div className="mt-2 bg-red-400/30 px-2 py-1 rounded-lg">
+                                    <p className="text-sm text-red-600 font-semibold">
+                                        {format(new Date(props.dueDate), 'PP')}
+                                    </p>
+                                </div>
+                            </Tooltip>
+                        ) : (
+                            <Tooltip key="foreground" color="foreground" content="The due date has not passed! 🎉" placement='bottom' className="capitalize">
+                                <div className="mt-2 bg-gray-400/30 px-2 py-1 rounded-lg">
+                                    <p className="text-sm text-gray-600 font-semibold">
+                                        {format(new Date(props.dueDate), 'PP')}
+                                    </p>
+                                </div>
+                            </Tooltip>
+                        )
+
+
+                    )}
+                </div>
             </div>
         </li>
     )

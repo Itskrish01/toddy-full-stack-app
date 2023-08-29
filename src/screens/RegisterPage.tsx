@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import { toast } from '../components/ui/use-toast';
 
 const schema = yup.object({
     username: yup.string().required(),
@@ -37,7 +37,9 @@ const RegisterPage = () => {
     const { mutate, isLoading } = useMutation(createUser, {
         onSuccess: data => {
             console.log(data);
-            toast.success("Successfully registered user 🎉",)
+            toast({
+                title: "Successfully Registered in 🎉",
+            })
             navigate('/login')
         },
         onError: (error) => {
