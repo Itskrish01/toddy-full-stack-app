@@ -104,7 +104,7 @@ const Todo = (props: Props) => {
                         hasDatePassed(props.dueDate) ? (
                             <Tooltip key="foreground" color="danger" content="The due date has passed" placement='bottom' className="capitalize">
                                 <div className="mt-2 bg-red-400/30 px-2 py-1 rounded-lg">
-                                    <p className="text-sm text-red-600 font-semibold">
+                                    <p className="text-sm text-red-600 font-medium">
                                         {format(new Date(props.dueDate), 'PP')}
                                     </p>
                                 </div>
@@ -112,7 +112,7 @@ const Todo = (props: Props) => {
                         ) : (
                             <Tooltip key="foreground" color="foreground" content="The due date has not passed! 🎉" placement='bottom' className="capitalize">
                                 <div className="mt-2 bg-gray-400/30 px-2 py-1 rounded-lg">
-                                    <p className="text-sm text-gray-600 font-semibold">
+                                    <p className="text-sm text-gray-600 font-medium">
                                         {format(new Date(props.dueDate), 'PP')}
                                     </p>
                                 </div>
