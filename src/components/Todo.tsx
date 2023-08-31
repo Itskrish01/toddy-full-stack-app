@@ -85,11 +85,13 @@ const Todo = (props: Props) => {
 
     return (
         <Card
-            onClick={() => navigate(`/todo/${props._id}`, {
+            isPressable
+            onPress={() => navigate(`/todo/${props._id}`, {
                 state: {
                     modalOpen: true
                 }
             })}
+
             shadow='sm'
         >
             <CardBody className={`flex flex-row items-start cursor-pointer gap-3 px-5 py-4 hover:bg-secondary-50 hover:border-secondary-50  ${props.className}`}>
