@@ -25,10 +25,14 @@ interface TodoData {
     completed: boolean | undefined;
 }
 
+type Props = {
+    flashBorder: boolean
+}
 
-const AddTodoInputBox = () => {
+
+const AddTodoInputBox = (props: Props) => {
     const { token } = useToken()
-    const { register, handleSubmit, formState: { errors }, control, setValue } = useForm<TodoData>({
+    const { register, handleSubmit, formState: { errors }, control, reset } = useForm<TodoData>({
         // @ts-expect-error it is working fine even with error
         resolver: yupResolver(todoSchema)
     });
@@ -57,9 +61,7 @@ const AddTodoInputBox = () => {
                 description: "It is simple as that to add todos",
             })
 
-            setValue('todoTitle', "")
-            setValue('dueDate', "")
-            setValue('description', "")
+            reset()
         },
     });
 
@@ -70,11 +72,11 @@ const AddTodoInputBox = () => {
             dueDate: data.dueDate ? data.dueDate : ""
         });
     };
-
     return (
-        <form className={`p-5 bg-[#fff] rounded-lg shadow ${errors.todoTitle ? 'border border-danger-500' : ''}`} onSubmit={handleSubmit(onSubmit)}>
+        <form className={`p-5 bg-[#fff] rounded-lg shadow border-2 transition-all duration-150 border-white ${props.flashBorder ? '!border-secondary-500' : ''} ${errors.todoTitle ? '!border-danger-500' : ''}`} onSubmit={handleSubmit(onSubmit)}>
             <input
                 {...register('todoTitle')}
+                id="title_border_input"
                 type="text"
                 className={`text-base w-full focus:outline-none text-primaryDark placeholder:text-[#c5c7d7] ${errors.todoTitle ? 'placeholder:text-danger-500' : ''}`} placeholder={errors.todoTitle ? 'Task title is required' : 'Add a new Task here...'}
                 autoComplete="off"
@@ -145,6 +147,7 @@ const AddTodoInputBox = () => {
             </div>
         </form>
     );
-};
+}
+
 
 export default AddTodoInputBox;

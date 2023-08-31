@@ -7,7 +7,11 @@ export const Layout = ({ children }: Props) => {
     const queryClient = new QueryClient()
     return (
         <QueryClientProvider client={queryClient}>
-            {children}
+            <div className='bg-[#eeeef4]'>
+                <div className='container mx-auto max-w-7xl w-full pt-20 px-4'>
+                    {children}
+                </div>
+            </div>
         </QueryClientProvider>
     )
 }

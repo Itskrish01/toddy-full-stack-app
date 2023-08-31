@@ -68,7 +68,7 @@ const LoginPage = () => {
 
 
     return (
-        <div className='container mx-auto max-w-2xl w-full pt-20 px-4'>
+        <>
             <div className='flex items-center flex-col'>
                 <Image src='/logo.png' height={100} width={100} />
                 <h2 className='sm:text-[36px] text-[24px] text-center font-[700] text-primaryDark mt-2'>
@@ -140,7 +140,7 @@ const LoginPage = () => {
                     <Link href="/register" underline="hover" className='text-center'>Register</Link>
                 </div>
             </form>
-        </div>
+        </>
     )
 }
 
