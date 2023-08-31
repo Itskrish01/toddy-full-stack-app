@@ -1,14 +1,15 @@
-import { Layout } from "./components/Layout"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Toaster } from "./components/ui/toaster"
 import { AppRouter } from "./routes/AppRouter"
 
 
 const App = () => {
+  const queryClient = new QueryClient()
   return (
-    <Layout>
+    <QueryClientProvider client={queryClient}>
       <Toaster />
       <AppRouter />
-    </Layout>
+    </QueryClientProvider>
   )
 }
 export default App

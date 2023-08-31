@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { PrivateRoutes } from "./PrivateRoutes";
 import { PublicRoutes } from "./PublicRoutes";
 import { TokenContext } from "../context/TokenContext";
+import { Layout } from "../components/Layout";
 
 export const AppRouter = () => {
     const tokenContext = useContext(TokenContext);
@@ -22,10 +23,12 @@ export const AppRouter = () => {
     }
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/*" element={<PrivateRoutes />} />
-            </Routes>
-        </BrowserRouter>
+        <Layout>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/*" element={<PrivateRoutes />} />
+                </Routes>
+            </BrowserRouter>
+        </Layout>
     );
 };
