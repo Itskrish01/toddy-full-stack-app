@@ -54,8 +54,8 @@ const TodoApp = () => {
     }
 
     useEffect(() => {
+        const todoAddInput = document.getElementById('title_border_input');
         if (flashBorder) {
-            const todoAddInput = document.getElementById('title_border_input');
             todoAddInput?.scrollIntoView({ behavior: 'smooth' });
 
             setTimeout(() => {
