@@ -91,7 +91,7 @@ const Todo = (props: Props) => {
                     modalOpen: true
                 }
             })}
-
+            className={`border-t-4 border-gray-500 ${props.dueDate !== null && hasDatePassed(props.dueDate) ? 'border-red-600' : 'border-gray-500'}`}
             shadow='sm'
         >
             <CardBody className={`flex flex-row items-start cursor-pointer gap-3 px-5 py-4 hover:bg-secondary-50 hover:border-secondary-50  ${props.className}`}>

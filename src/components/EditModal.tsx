@@ -160,7 +160,6 @@ export default function EditModal() {
                                 // @ts-expect-error it is working fine even with error
                                 onSelect={(date) => setDueDate(date)}
                                 disabled={(date) => {
-                                    console.log(date)
                                     return (
                                         date < new Date("1900-01-01")
                                     )

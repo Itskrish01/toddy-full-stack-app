@@ -8,6 +8,7 @@ import { Button, Card, CardBody, Chip, Image, Spinner } from "@nextui-org/react"
 import LogOutIcon from "../icons/LogOutIcon";
 import { Outlet, useNavigate } from "react-router-dom";
 import _ from "lodash";
+import { format } from "date-fns";
 
 
 interface todoData {
@@ -23,6 +24,7 @@ const TodoApp = () => {
     const [flashBorder, setFlashBorder] = useState<boolean>(false)
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
     const navigate = useNavigate()
+    const todayDate = new Date()
 
 
     const { isLoading, data } = useQuery({
@@ -72,11 +74,6 @@ const TodoApp = () => {
         }
     }, [userAuthenticated]);
 
-    const pending_todos = _.filter(
-        todos, function (o) {
-            return !o.completed;
-        }
-    );
 
     const completed_todos = _.filter(
         todos, function (o) {
@@ -99,7 +96,7 @@ const TodoApp = () => {
                         <div className="my-10 ">
                             {todos && user && (
                                 <>
-                                    <h1 className="sm:text-3xl text-lg font-semibold text-black/90">Welcome back, {user?.username}</h1>
+                                    <h1 className="sm:text-3xl text-xl font-semibold text-black/90 flex items-center gap-3">Welcome back, {user?.username} <span className="sm:text-lg text-sm text-gray-500">({format(todayDate, 'PP')})</span></h1>
                                     <div className="flex items-center mt-6 gap-2 flex-wrap">
                                         <Card shadow="sm" className="w-full lg:w-80">
                                             <CardBody className="flex justify-between flex-row items-center">
@@ -108,15 +105,6 @@ const TodoApp = () => {
                                                     <h6 className="font-semibold text-gray-600">Completed</h6>
                                                 </div>
                                                 <Chip color="secondary" className="font-semibold">{completed_todos?.length}</Chip>
-                                            </CardBody>
-                                        </Card>
-                                        <Card shadow="sm" className="w-full lg:w-80">
-                                            <CardBody className="flex justify-between flex-row items-center">
-                                                <div className="flex items-center gap-6">
-                                                    <img src="wall-clock.png" alt="pending" height={30} width={30} />
-                                                    <h6 className="font-semibold text-gray-600">Pending</h6>
-                                                </div>
-                                                <Chip color="secondary" className="font-semibold">{pending_todos?.length}</Chip>
                                             </CardBody>
                                         </Card>
                                     </div>
@@ -137,7 +125,7 @@ const TodoApp = () => {
                                         </Button>
                                     </div>
                                 ) : (
-                                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
+                                    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                                         {todos?.map((todo: todoData, index: number) => (
                                             <Todo
                                                 key={todo._id}
