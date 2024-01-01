@@ -141,7 +141,7 @@ const TodoApp = () => {
                                 )}
                         </ul>
                     </div>
-                    <div className="mt-8">
+                    <div className="mt-8 sticky bottom-0">
                         <AddTodoInputBox flashBorder={flashBorder} />
                     </div>
                 </div>

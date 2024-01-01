@@ -45,8 +45,9 @@ const RegisterPage = () => {
         onError: (error) => {
             if (error instanceof Error) {
                 // @ts-expect-error it is working fine even with error
-                toast.error(error?.response.data.error)
+                toast({title: error?.response.data.error})
             } else {
+                toast({title: "Something went wrong..."})
                 console.log('Unexpected error', error);
             }
         },
